@@ -23,13 +23,19 @@ class MeliScraper(BaseScraper):
         tipoPagina = 0
 
         async with async_playwright() as p: 
-            browser = await p.chromium.launch(headless=False)
-            context = await browser.new_context()
+            browser = await p.chromium.launch(headless=True)
+            context = await browser.new_context(user_agent="Mozilla/5.0 ...")
 
             pagina1 = await context.new_page()
+            await pagina1.add_init_script("""
+            Object.defineProperty(navigator, 'webdriver', {
+            get: () => false,
+            });
+            """)
+
             await pagina1.wait_for_timeout(1000)
             await pagina1.goto(url)
-
+            
 
             erro = pagina1.locator("div.error-code")
 

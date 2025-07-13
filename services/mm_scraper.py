@@ -23,7 +23,7 @@ class MMScraper(BaseScraper):
             erro = ""
             tipoPagina = 0
 
-            browser = await p.chromium.launch(headless=False)
+            browser = await p.chromium.launch(headless=True)
             context = await browser.new_context()
 
             pagina1 = await context.new_page()

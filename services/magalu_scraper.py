@@ -25,10 +25,19 @@ class Magalu(BaseScraper):
         tipoPagina = 0
 
         async with async_playwright() as p: 
-            browser = await p.chromium.launch(headless=False)
-            context = await browser.new_context()
+            browser = await p.chromium.launch(headless=True)
+            context = await browser.new_context(user_agent="Mozilla/5.0 ...")
 
             pagina1 = await context.new_page()
+            # await pagina1.add_init_script("""
+            # Object.defineProperty(navigator, 'webdriver', {
+            # get: () => false,
+            # });
+            # """)
+            await pagina1.add_init_script("""
+            Object.defineProperty(navigator, 'languages', { get: () => ['pt-BR', 'pt'] });
+            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+            """)
             await pagina1.wait_for_timeout(1000)
             await pagina1.goto(url)
 
@@ -73,6 +82,7 @@ class Magalu(BaseScraper):
                 await input.fill(cep)
 
                 if(request_data["com_frete"] == "S"):
+                    await pagina1.wait_for_timeout(2000)
                     valorFreteStr = await pagina1.locator("p.sc-dcJsrY.eLxcFM.sc-gvPdwL.OFrmj").first.inner_text()
 
                     if(valorFreteStr == "Frete Grátis"):
