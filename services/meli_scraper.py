@@ -81,6 +81,8 @@ class MeliScraper(BaseScraper):
 
                     await pagina1.reload()
 
+                    await pagina1.wait_for_timeout(2000)
+
                     prazoEntregaModal = pagina1.locator('div.andes-tooltip__trigger').locator('button.andes-button.seo-ui-anchor__button.ui-pdp-action-modal__link.andes-button--large.andes-button--transparent.andes-button--full-width').locator('span.andes-button__content').get_by_text('Mais formas de entrega').first
 
                     await prazoEntregaModal.click()
