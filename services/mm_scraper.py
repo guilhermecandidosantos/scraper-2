@@ -31,7 +31,7 @@ class MMScraper(BaseScraper):
 
             await pagina1.wait_for_selector("h1.cav--c-fpAEqe")
             titulo = await pagina1.locator("h1.cav--c-fpAEqe").text_content()
-            nome = await pagina1.locator("a.cav--c-gNPphv.cav--c-gNPphv-jBYPmg-textStyle-bodySmallSemibold.cav--c-gNPphv-idLkonN-css").inner_text(timeout=1500)
+            nome = await pagina1.locator("p.cav--c-gNPphv.cav--c-gNPphv-jBYPmg-textStyle-bodySmallSemibold.cav--c-gNPphv-idvyejX-css").inner_text(timeout=1500)
 
             preco = await pagina1.locator("span.cav--c-gNPphv.cav--c-gNPphv-iELazp-textStyle-h3Semibold.cav--c-gNPphv-hHqInm-size-h3").inner_text()
             precoSemDesconto = re.sub(r"[^\d.]", "", preco.replace('R$', '').replace('.', '').strip().replace(',', '.'))
@@ -82,9 +82,9 @@ class MMScraper(BaseScraper):
 
               await pagina1.locator("button.cav--c-iOefvc.cav--c-iOefvc-kAkgtL-variant-secondary.cav--c-iOefvc-idykQLZ-css.button__freight--calculate").click()
 
-              await pagina1.wait_for_selector("p.cav--c-gNPphv.cav--c-gNPphv-iNbZ-textStyle-bodyMediumBold.cav--c-gNPphv-iddfHHN-css")
+              await pagina1.wait_for_selector("p.cav--c-gNPphv.cav--c-gNPphv-iNbZ-textStyle-bodyMediumBold.cav--c-gNPphv-idXPgfK-css")
 
-              valor_frete_str = await pagina1.locator("p.cav--c-gNPphv.cav--c-gNPphv-iNbZ-textStyle-bodyMediumBold.cav--c-gNPphv-iddfHHN-css").inner_text()
+              valor_frete_str = await pagina1.locator("p.cav--c-gNPphv.cav--c-gNPphv-iNbZ-textStyle-bodyMediumBold.cav--c-gNPphv-idXPgfK-css").inner_text()
 
               if(valor_frete_str == "GRÁTIS"):
                   valorFrete = 0
